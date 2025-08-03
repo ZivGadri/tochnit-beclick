@@ -13,6 +13,7 @@ export function Header() {
   const navigation = [
     { name: "בית", href: "/" },
     { name: "שירותים", href: "/services" },
+    { name: "פרויקטים", href: "/portfolio" },
     { name: "אודות", href: "/about" },
     { name: "צור קשר", href: "/contact" },
   ];

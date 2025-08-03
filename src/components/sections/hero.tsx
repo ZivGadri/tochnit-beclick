@@ -25,7 +25,12 @@ export function Hero() {
                 </Link>
               </Button>
               <Button asChild variant="outline" size="lg" className="text-lg">
-                <Link href="/contact">צרו קשר לייעוץ חינם</Link>
+                <Link href="/portfolio">צפו בפרויקטים שלנו</Link>
+              </Button>
+            </div>
+            <div className="mt-4">
+              <Button asChild variant="ghost" size="sm">
+                <Link href="/contact">או צרו קשר לייעוץ חינם</Link>
               </Button>
             </div>
           </div>

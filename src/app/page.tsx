@@ -1,5 +1,6 @@
 import { Hero } from "@/components/sections/hero";
 import { Services } from "@/components/sections/services";
+import { PortfolioPreview } from "@/components/sections/portfolio-preview";
 import { About } from "@/components/sections/about";
 import { Contact } from "@/components/sections/contact";
 import { Header } from "@/components/layout/header";
@@ -12,6 +13,7 @@ export default function HomePage() {
       <main className="w-full">
         <Hero />
         <Services />
+        <PortfolioPreview />
         <About />
         <Contact />
       </main>
