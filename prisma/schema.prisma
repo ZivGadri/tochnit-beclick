@@ -1,0 +1,282 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  role      Role     @default(CLIENT)
+  password  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  quotes    Quote[]
+  orders    Order[]
+  sessions  Session[]
+  accounts  Account[]
+
+  @@map("users")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model Quote {
+  id          String      @id @default(cuid())
+  userId      String?
+  status      QuoteStatus @default(PENDING)
+  
+  // Personal Information
+  firstName   String
+  lastName    String
+  email       String
+  phone       String
+  
+  // Project Information
+  projectType String
+  projectSize String
+  budget      String
+  timeline    String
+  location    String
+  
+  // Services
+  services    String[] // Array of service IDs
+  
+  // Additional Information
+  description        String
+  specialRequirements String?
+  
+  // Files
+  attachments QuoteAttachment[]
+  
+  // Terms
+  agreeToTerms    Boolean
+  allowMarketing  Boolean
+  
+  // Admin fields
+  adminNotes      String?
+  estimatedPrice  Float?
+  responseMessage String?
+  respondedAt     DateTime?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Relations
+  user   User?  @relation(fields: [userId], references: [id])
+  orders Order[]
+
+  @@map("quotes")
+}
+
+model QuoteAttachment {
+  id       String @id @default(cuid())
+  quoteId  String
+  filename String
+  filepath String
+  filesize Int
+  mimetype String
+  
+  quote Quote @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+  
+  @@map("quote_attachments")
+}
+
+model Order {
+  id              String      @id @default(cuid())
+  userId          String?
+  quoteId         String?
+  status          OrderStatus @default(PENDING)
+  
+  // Order details
+  totalAmount     Float
+  currency        String      @default("ILS")
+  
+  // Stripe
+  stripeSessionId String?
+  stripePaymentId String?
+  
+  // Project details
+  projectTitle    String
+  projectType     String
+  services        String[] // Array of service names
+  
+  // Timeline
+  startDate       DateTime?
+  expectedEndDate DateTime?
+  actualEndDate   DateTime?
+  
+  // Admin fields
+  adminNotes      String?
+  internalStatus  String?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // Relations
+  user  User?  @relation(fields: [userId], references: [id])
+  quote Quote? @relation(fields: [quoteId], references: [id])
+
+  @@map("orders")
+}
+
+model Portfolio {
+  id          String           @id @default(cuid())
+  title       String
+  description String
+  category    PortfolioCategory
+  status      ContentStatus    @default(PUBLISHED)
+  
+  // Images
+  images      PortfolioImage[]
+  
+  // Details
+  clientName  String?
+  location    String?
+  area        String?
+  year        Int?
+  
+  // SEO
+  slug        String           @unique
+  metaTitle   String?
+  metaDescription String?
+  
+  // Order
+  displayOrder Int             @default(0)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("portfolio")
+}
+
+model PortfolioImage {
+  id          String @id @default(cuid())
+  portfolioId String
+  filename    String
+  filepath    String
+  alt         String?
+  caption     String?
+  displayOrder Int   @default(0)
+  
+  portfolio Portfolio @relation(fields: [portfolioId], references: [id], onDelete: Cascade)
+  
+  @@map("portfolio_images")
+}
+
+model ContactSubmission {
+  id      String @id @default(cuid())
+  name    String
+  email   String
+  phone   String?
+  subject String
+  message String
+  
+  // Status
+  status     ContactStatus @default(NEW)
+  adminNotes String?
+  respondedAt DateTime?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("contact_submissions")
+}
+
+model AdminSettings {
+  id    String @id @default(cuid())
+  key   String @unique
+  value String
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("admin_settings")
+}
+
+// Enums
+enum Role {
+  ADMIN
+  CLIENT
+}
+
+enum QuoteStatus {
+  PENDING
+  REVIEWING
+  RESPONDED
+  ACCEPTED
+  REJECTED
+  EXPIRED
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+  REFUNDED
+}
+
+enum PortfolioCategory {
+  RESIDENTIAL
+  COMMERCIAL
+  INTERIOR_DESIGN
+  ARCHITECTURAL_DESIGN
+  RENOVATION
+  OTHER
+}
+
+enum ContentStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum ContactStatus {
+  NEW
+  READ
+  RESPONDED
+  ARCHIVED
+}

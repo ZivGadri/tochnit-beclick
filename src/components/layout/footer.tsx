@@ -126,6 +126,9 @@ export function Footer() {
               <Link href="/terms" className="hover:text-white transition-colors">
                 תנאי שימוש
               </Link>
+              <Link href="/admin" className="hover:text-white transition-colors opacity-60">
+                מנהל
+              </Link>
             </div>
           </div>
         </div>
