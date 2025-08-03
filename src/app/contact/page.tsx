@@ -42,10 +42,28 @@ export default function ContactPage() {
     setIsSubmitting(true);
     
     try {
-      // Simulate form submission
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      console.log("Contact form submitted:", data);
+      // Send email notification to admin
+      const emailResponse = await fetch('/api/email/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+          message: `${data.subject ? `נושא: ${data.subject}\n\n` : ''}${data.message}`,
+        }),
+      });
+
+      const emailResult = await emailResponse.json();
+
+      if (!emailResponse.ok) {
+        throw new Error(emailResult.error || 'Failed to send email');
+      }
+
+      console.log("Contact form submitted successfully:", data);
+      console.log("Email sent:", emailResult);
       setIsSubmitted(true);
       form.reset();
     } catch (error) {

@@ -117,11 +117,44 @@ export default function QuotePage() {
   const onSubmit = async (values: QuoteFormValues) => {
     setIsSubmitting(true);
     try {
-      // Here we would integrate with AWS Lambda and SES
-      console.log("Quote form submission:", values);
-      
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      // Prepare file names for email (if any files were uploaded)
+      const fileNames = uploadedFiles.map(file => file.name);
+
+      // Send email notification to admin
+      const emailResponse = await fetch('/api/email/quote-request', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: `${values.firstName} ${values.lastName}`,
+          firstName: values.firstName,
+          lastName: values.lastName,
+          email: values.email,
+          phone: values.phone,
+          projectType: values.projectType,
+          projectSize: values.projectSize,
+          budget: values.budget,
+          timeline: values.timeline,
+          location: values.location,
+          services: values.services,
+          description: values.description,
+          specialRequirements: values.specialRequirements,
+          files: fileNames.length > 0 ? fileNames : undefined,
+        }),
+      });
+
+      const emailResult = await emailResponse.json();
+
+      if (!emailResponse.ok) {
+        throw new Error(emailResult.error || 'Failed to send email');
+      }
+
+      // TODO: Upload files to AWS S3 if any files were selected
+      // TODO: Save quote request to database
+
+      console.log("Quote form submission successful:", values);
+      console.log("Email sent:", emailResult);
       
       alert("הבקשה נשלחה בהצלחה! נחזור אליכם בקרוב");
       form.reset();
