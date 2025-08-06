@@ -47,7 +47,7 @@ export default function ContactPage() {
       // Get reCAPTCHA token if reCAPTCHA is configured
       let recaptchaToken = null;
       if (process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY) {
-        recaptchaToken = await recaptchaRef.current?.executeAsync();
+        recaptchaToken = await recaptchaRef.current?.executeAsync('contact_submission');
         if (!recaptchaToken) {
           alert('אירעה שגיאה באימות האבטחה. אנא נסו שוב.');
           setIsSubmitting(false);
@@ -286,20 +286,16 @@ export default function ContactPage() {
                           )}
                         />
 
-                        {/* reCAPTCHA */}
-                        {process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ? (
-                          <div className="flex justify-center">
-                            <Recaptcha
-                              ref={recaptchaRef}
-                              siteKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-                              size="normal"
-                              theme="light"
-                              onError={() => {
-                                console.error('reCAPTCHA failed to load');
-                              }}
-                            />
-                          </div>
-                        ) : (
+                        {/* reCAPTCHA v3 is invisible - no UI component needed */}
+                        <Recaptcha
+                          ref={recaptchaRef}
+                          action="contact_submission"
+                          onError={() => {
+                            console.error('reCAPTCHA failed to load');
+                          }}
+                        />
+
+                        {!process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY && (
                           <div className="flex justify-center">
                             <div className="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded" role="alert">
                               <span className="block sm:inline">⚠️ reCAPTCHA לא מוגדר. אנא הגדירו את המפתח בהגדרות הסביבה.</span>

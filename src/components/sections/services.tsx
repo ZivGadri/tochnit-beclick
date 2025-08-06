@@ -1,15 +1,21 @@
+"use client";
+
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Home, PaintBucket, Ruler, Lightbulb } from "lucide-react";
+import { Home, PaintBucket, Ruler, Lightbulb, ShoppingCart } from "lucide-react";
+import { useCart } from "@/hooks/use-cart";
+import { useState } from "react";
 
-const services = [
+export const services = [
   {
     id: "architectural-design",
     icon: Home,
     title: "עיצוב אדריכלי",
     description: "תכנון מבנים חדשים ושיפוץ מבנים קיימים עם דגש על פונקציונליות ויופי",
     price: "החל מ-₪15,000",
+    numericPrice: 15000,
+    category: "אדריכלות",
     features: ["תוכניות אדריכליות מפורטות", "ליווי בתהליך הרישוי", "פיקוח על הביצוע"]
   },
   {
@@ -18,6 +24,8 @@ const services = [
     title: "עיצוב פנים",
     description: "יצירת חללים פנימיים מעוצבים ומותאמים לאורח החיים שלכם",
     price: "החל מ-₪8,000",
+    numericPrice: 8000,
+    category: "עיצוב פנים",
     features: ["תכנון פריסת רהיטים", "בחירת צבעים וחומרים", "עיצוב תאורה"]
   },
   {
@@ -26,6 +34,8 @@ const services = [
     title: "תכנון חללים",
     description: "אופטימיזציה של השימוש בחלל לקבלת מקסימום פונקציונליות",
     price: "החל מ-₪5,000",
+    numericPrice: 5000,
+    category: "תכנון",
     features: ["ניתוח חלל קיים", "הצעות לשיפור", "תוכניות מפורטות"]
   },
   {
@@ -34,11 +44,33 @@ const services = [
     title: "עיצוב תאורה",
     description: "תכנון מערכות תאורה שיוצרות אווירה מושלמת בכל חלל",
     price: "החל מ-₪3,000",
+    numericPrice: 3000,
+    category: "תאורה",
     features: ["תכנון נקודות תאורה", "בחירת גופי תאורה", "חיסכון באנרגיה"]
   }
 ];
 
 export function Services() {
+  const { addItem } = useCart();
+  const [addingStates, setAddingStates] = useState<{ [key: string]: boolean }>({});
+
+  const handleAddToCart = (service: typeof services[0]) => {
+    setAddingStates(prev => ({ ...prev, [service.id]: true }));
+    
+    addItem({
+      id: service.id,
+      name: service.title,
+      description: service.description,
+      price: service.numericPrice,
+      category: service.category,
+    });
+
+    // Reset loading state after a short delay
+    setTimeout(() => {
+      setAddingStates(prev => ({ ...prev, [service.id]: false }));
+    }, 500);
+  };
+
   return (
     <section className="py-20 bg-white">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -56,6 +88,7 @@ export function Services() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {services.map((service) => {
             const Icon = service.icon;
+            const isAdding = addingStates[service.id] || false;
             return (
               <Card key={service.id} className="hover:shadow-lg transition-shadow duration-300">
                 <CardHeader className="text-center pb-4">
@@ -79,11 +112,27 @@ export function Services() {
                       </li>
                     ))}
                   </ul>
-                  <Button asChild className="w-full">
-                    <Link href={`/services/${service.id}`}>
-                      פרטים נוספים
-                    </Link>
-                  </Button>
+                  <div className="space-y-2">
+                    <Button asChild className="w-full" variant="outline">
+                      <Link href={`/services/${service.id}`}>
+                        פרטים נוספים
+                      </Link>
+                    </Button>
+                    <Button 
+                      onClick={() => handleAddToCart(service)}
+                      disabled={isAdding}
+                      className="w-full"
+                    >
+                      {isAdding ? (
+                        "מוסיף..."
+                      ) : (
+                        <>
+                          <ShoppingCart className="ml-2 h-4 w-4" />
+                          הוסף לעגלה
+                        </>
+                      )}
+                    </Button>
+                  </div>
                 </CardContent>
               </Card>
             );
@@ -93,7 +142,7 @@ export function Services() {
         {/* CTA */}
         <div className="text-center">
           <Button asChild size="lg" variant="outline">
-            <Link href="/services">רואים את כל השירותים</Link>
+            <Link href="/cart">עגלת קניות</Link>
           </Button>
         </div>
       </div>

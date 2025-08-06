@@ -21,10 +21,18 @@ export async function POST(request: NextRequest) {
     const validatedData = ContactFormSchema.parse(body);
 
     // Verify reCAPTCHA first
-    const recaptchaResult = await verifyRecaptcha(validatedData.recaptchaToken);
+    const recaptchaResult = await verifyRecaptcha(
+      validatedData.recaptchaToken, 
+      'contact_submission', // expected action
+      0.5 // minimum score
+    );
     if (!recaptchaResult.success) {
       return NextResponse.json(
-        { success: false, error: recaptchaResult.error || "reCAPTCHA verification failed" },
+        { 
+          success: false, 
+          error: recaptchaResult.error || "reCAPTCHA verification failed",
+          score: recaptchaResult.score 
+        },
         { status: 400 }
       );
     }

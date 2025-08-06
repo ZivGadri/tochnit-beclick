@@ -122,7 +122,7 @@ export default function QuotePage() {
       // Get reCAPTCHA token if reCAPTCHA is configured
       let recaptchaToken = null;
       if (process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY) {
-        recaptchaToken = await recaptchaRef.current?.executeAsync();
+        recaptchaToken = await recaptchaRef.current?.executeAsync('quote_submission');
         if (!recaptchaToken) {
           alert('אירעה שגיאה באימות האבטחה. אנא נסו שוב.');
           setIsSubmitting(false);
@@ -276,7 +276,7 @@ export default function QuotePage() {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>סוג פרויקט *</FormLabel>
-                          <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <Select onValueChange={field.onChange} value={field.value}>
                             <FormControl>
                               <SelectTrigger>
                                 <SelectValue placeholder="בחרו סוג פרויקט" />
@@ -285,9 +285,15 @@ export default function QuotePage() {
                             <SelectContent>
                               <SelectItem value="apartment">דירה</SelectItem>
                               <SelectItem value="house">בית פרטי</SelectItem>
+                              <SelectItem value="villa">וילה</SelectItem>
                               <SelectItem value="office">משרד</SelectItem>
                               <SelectItem value="commercial">מסחרי</SelectItem>
+                              <SelectItem value="retail">חנות/קמעונאות</SelectItem>
+                              <SelectItem value="restaurant">מסעדה/בית קפה</SelectItem>
+                              <SelectItem value="clinic">קליניקה רפואית</SelectItem>
                               <SelectItem value="public">מבנה ציבורי</SelectItem>
+                              <SelectItem value="industrial">תעשייתי</SelectItem>
+                              <SelectItem value="renovation">שיפוץ/שדרוג</SelectItem>
                             </SelectContent>
                           </Select>
                           <FormMessage />
@@ -300,17 +306,19 @@ export default function QuotePage() {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>גודל פרויקט *</FormLabel>
-                          <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <Select onValueChange={field.onChange} value={field.value}>
                             <FormControl>
                               <SelectTrigger>
                                 <SelectValue placeholder="בחרו גודל פרויקט" />
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
-                              <SelectItem value="small">קטן (עד 100 מ״ר)</SelectItem>
+                              <SelectItem value="very-small">זעיר (עד 50 מ״ר)</SelectItem>
+                              <SelectItem value="small">קטן (50-100 מ״ר)</SelectItem>
                               <SelectItem value="medium">בינוני (100-200 מ״ר)</SelectItem>
-                              <SelectItem value="large">גדול (200-500 מ״ר)</SelectItem>
-                              <SelectItem value="xl">גדול מאוד (מעל 500 מ״ר)</SelectItem>
+                              <SelectItem value="large">גדול (200-400 מ״ר)</SelectItem>
+                              <SelectItem value="xl">גדול מאוד (400-800 מ״ר)</SelectItem>
+                              <SelectItem value="xxl">מתחם גדול (מעל 800 מ״ר)</SelectItem>
                             </SelectContent>
                           </Select>
                           <FormMessage />
@@ -326,17 +334,20 @@ export default function QuotePage() {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>תקציב משוער *</FormLabel>
-                          <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <Select onValueChange={field.onChange} value={field.value}>
                             <FormControl>
                               <SelectTrigger>
                                 <SelectValue placeholder="בחרו טווח תקציב" />
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
-                              <SelectItem value="low">עד 50,000 ₪</SelectItem>
-                              <SelectItem value="medium">50,000 - 150,000 ₪</SelectItem>
-                              <SelectItem value="high">150,000 - 300,000 ₪</SelectItem>
-                              <SelectItem value="premium">מעל 300,000 ₪</SelectItem>
+                              <SelectItem value="basic">בסיסי (עד 30,000 ₪)</SelectItem>
+                              <SelectItem value="low">נמוך (30,000 - 80,000 ₪)</SelectItem>
+                              <SelectItem value="medium">בינוני (80,000 - 200,000 ₪)</SelectItem>
+                              <SelectItem value="high">גבוה (200,000 - 500,000 ₪)</SelectItem>
+                              <SelectItem value="premium">פרימיום (500,000 - 1,000,000 ₪)</SelectItem>
+                              <SelectItem value="luxury">יוקרה (מעל 1,000,000 ₪)</SelectItem>
+                              <SelectItem value="consultation">רק תכנון/ייעוץ</SelectItem>
                             </SelectContent>
                           </Select>
                           <FormMessage />
@@ -349,17 +360,20 @@ export default function QuotePage() {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>זמן ביצוע רצוי *</FormLabel>
-                          <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <Select onValueChange={field.onChange} value={field.value}>
                             <FormControl>
                               <SelectTrigger>
                                 <SelectValue placeholder="בחרו זמן ביצוע" />
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
+                              <SelectItem value="asap">בהקדם (עד 2 שבועות)</SelectItem>
                               <SelectItem value="urgent">דחוף (עד חודש)</SelectItem>
                               <SelectItem value="fast">מהיר (1-3 חודשים)</SelectItem>
                               <SelectItem value="normal">רגיל (3-6 חודשים)</SelectItem>
-                              <SelectItem value="flexible">גמיש (מעל 6 חודשים)</SelectItem>
+                              <SelectItem value="relaxed">נינוח (6-12 חודשים)</SelectItem>
+                              <SelectItem value="flexible">גמיש (מעל שנה)</SelectItem>
+                              <SelectItem value="planning">רק תכנון כעת</SelectItem>
                             </SelectContent>
                           </Select>
                           <FormMessage />
@@ -595,20 +609,16 @@ export default function QuotePage() {
                     />
                   </div>
 
-                  {/* reCAPTCHA */}
-                  {process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ? (
-                    <div className="flex justify-center">
-                      <Recaptcha
-                        ref={recaptchaRef}
-                        siteKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-                        size="normal"
-                        theme="light"
-                        onError={() => {
-                          console.error('reCAPTCHA failed to load');
-                        }}
-                      />
-                    </div>
-                  ) : (
+                  {/* reCAPTCHA v3 is invisible - no UI component needed */}
+                  <Recaptcha
+                    ref={recaptchaRef}
+                    action="quote_submission"
+                    onError={() => {
+                      console.error('reCAPTCHA failed to load');
+                    }}
+                  />
+
+                  {!process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY && (
                     <div className="flex justify-center">
                       <div className="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded" role="alert">
                         <span className="block sm:inline">⚠️ reCAPTCHA לא מוגדר. אנא הגדירו את המפתח בהגדרות הסביבה.</span>
