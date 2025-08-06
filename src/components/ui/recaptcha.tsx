@@ -1,53 +1,50 @@
 'use client';
 
-import ReCAPTCHA from 'react-google-recaptcha';
-import { forwardRef, useImperativeHandle, useRef } from 'react';
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
+import { forwardRef, useImperativeHandle, useCallback } from 'react';
 
 export interface RecaptchaRef {
-  executeAsync: () => Promise<string | null>;
+  executeAsync: (action?: string) => Promise<string | null>;
   reset: () => void;
 }
 
 interface RecaptchaProps {
-  siteKey: string;
-  onChange?: (token: string | null) => void;
-  onExpired?: () => void;
+  siteKey?: string; // Optional since provider handles the key
   onError?: () => void;
-  size?: 'compact' | 'normal' | 'invisible';
-  theme?: 'light' | 'dark';
-  tabindex?: number;
+  action?: string;
 }
 
 export const Recaptcha = forwardRef<RecaptchaRef, RecaptchaProps>(
-  ({ siteKey, onChange, onExpired, onError, size = 'normal', theme = 'light', tabindex }, ref) => {
-    const recaptchaRef = useRef<ReCAPTCHA>(null);
+  ({ onError, action = 'submit' }, ref) => {
+    const { executeRecaptcha } = useGoogleReCaptcha();
+
+    const handleExecuteRecaptcha = useCallback(async (actionName?: string) => {
+      if (!executeRecaptcha) {
+        console.error('reCAPTCHA not initialized - make sure GoogleReCaptchaProvider is set up');
+        if (onError) onError();
+        return null;
+      }
+
+      try {
+        const token = await executeRecaptcha(actionName || action);
+        return token;
+      } catch (error) {
+        console.error('reCAPTCHA execution error:', error);
+        if (onError) onError();
+        return null;
+      }
+    }, [executeRecaptcha, action, onError]);
 
     useImperativeHandle(ref, () => ({
-      executeAsync: async () => {
-        if (recaptchaRef.current) {
-          return await recaptchaRef.current.executeAsync();
-        }
-        return null;
-      },
+      executeAsync: handleExecuteRecaptcha,
       reset: () => {
-        if (recaptchaRef.current) {
-          recaptchaRef.current.reset();
-        }
+        // reCAPTCHA v3 doesn't need explicit reset as it's invisible
+        console.log('reCAPTCHA v3 does not require reset');
       },
     }));
 
-    return (
-      <ReCAPTCHA
-        ref={recaptchaRef}
-        sitekey={siteKey}
-        onChange={onChange}
-        onExpired={onExpired}
-        onError={onError}
-        size={size}
-        theme={theme}
-        tabindex={tabindex}
-      />
-    );
+    // reCAPTCHA v3 is invisible, so no visual component is rendered
+    return null;
   }
 );
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -14,6 +14,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Upload, FileText, X } from "lucide-react";
+import { Recaptcha, type RecaptchaRef } from "@/components/ui/recaptcha";
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 const ACCEPTED_FILE_TYPES = [
@@ -68,6 +69,7 @@ const serviceOptions = [
 export default function QuotePage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+  const recaptchaRef = useRef<RecaptchaRef>(null);
 
   const form = useForm<QuoteFormValues>({
     resolver: zodResolver(quoteFormSchema),
@@ -117,6 +119,19 @@ export default function QuotePage() {
   const onSubmit = async (values: QuoteFormValues) => {
     setIsSubmitting(true);
     try {
+      // Get reCAPTCHA token if reCAPTCHA is configured
+      let recaptchaToken = null;
+      if (process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY) {
+        recaptchaToken = await recaptchaRef.current?.executeAsync();
+        if (!recaptchaToken) {
+          alert('אירעה שגיאה באימות האבטחה. אנא נסו שוב.');
+          setIsSubmitting(false);
+          return;
+        }
+      } else {
+        console.warn('reCAPTCHA is not configured, skipping verification');
+      }
+
       // Prepare file names for email (if any files were uploaded)
       const fileNames = uploadedFiles.map(file => file.name);
 
@@ -141,6 +156,7 @@ export default function QuotePage() {
           description: values.description,
           specialRequirements: values.specialRequirements,
           files: fileNames.length > 0 ? fileNames : undefined,
+          recaptchaToken: recaptchaToken,
         }),
       });
 
@@ -159,9 +175,11 @@ export default function QuotePage() {
       alert("הבקשה נשלחה בהצלחה! נחזור אליכם בקרוב");
       form.reset();
       setUploadedFiles([]);
+      recaptchaRef.current?.reset();
     } catch (error) {
       console.error("Error submitting quote:", error);
       alert("אירעה שגיאה בשליחת הבקשה. אנא נסו שוב");
+      recaptchaRef.current?.reset();
     } finally {
       setIsSubmitting(false);
     }
@@ -386,23 +404,45 @@ export default function QuotePage() {
                                 return (
                                   <FormItem
                                     key={item.value}
-                                    className="flex flex-row items-start space-x-3 space-y-0"
+                                    className="flex flex-row items-start gap-3 space-y-0"
                                   >
                                     <FormControl>
                                       <Checkbox
-                                        checked={field.value?.includes(item.value)}
+                                        checked={field.value?.includes(item.value) || false}
                                         onCheckedChange={(checked) => {
-                                          return checked
-                                            ? field.onChange([...field.value, item.value])
-                                            : field.onChange(
-                                                field.value?.filter(
-                                                  (value) => value !== item.value
-                                                )
+                                          const currentServices = field.value || [];
+                                          if (checked) {
+                                            // Add service if not already included
+                                            if (!currentServices.includes(item.value)) {
+                                              field.onChange([...currentServices, item.value]);
+                                            }
+                                          } else {
+                                            // Remove service
+                                            field.onChange(
+                                              currentServices.filter(
+                                                (value) => value !== item.value
                                               )
+                                            );
+                                          }
                                         }}
                                       />
                                     </FormControl>
-                                    <FormLabel className="font-normal">
+                                    <FormLabel 
+                                      className="font-normal cursor-pointer select-none"
+                                      onClick={() => {
+                                        const currentServices = field.value || [];
+                                        const isChecked = currentServices.includes(item.value);
+                                        if (!isChecked) {
+                                          field.onChange([...currentServices, item.value]);
+                                        } else {
+                                          field.onChange(
+                                            currentServices.filter(
+                                              (value) => value !== item.value
+                                            )
+                                          );
+                                        }
+                                      }}
+                                    >
                                       {item.label}
                                     </FormLabel>
                                   </FormItem>
@@ -455,7 +495,7 @@ export default function QuotePage() {
                   {/* File Upload */}
                   <div className="space-y-4">
                     <FormLabel>קבצים נלווים</FormLabel>
-                    <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+                    <div className="relative border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-gray-400 transition-colors">
                       <Upload className="mx-auto h-12 w-12 text-gray-400 mb-4" />
                       <div className="space-y-2">
                         <p className="text-sm text-gray-600">
@@ -511,7 +551,7 @@ export default function QuotePage() {
                       control={form.control}
                       name="agreeToTerms"
                       render={({ field }) => (
-                        <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                        <FormItem className="flex flex-row items-start gap-3 space-y-0">
                           <FormControl>
                             <Checkbox
                               checked={field.value}
@@ -519,7 +559,10 @@ export default function QuotePage() {
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
-                            <FormLabel>
+                            <FormLabel 
+                              className="cursor-pointer select-none"
+                              onClick={() => field.onChange(!field.value)}
+                            >
                               אני מסכים לתנאי השימוש ומדיניות הפרטיות *
                             </FormLabel>
                           </div>
@@ -532,7 +575,7 @@ export default function QuotePage() {
                       control={form.control}
                       name="allowMarketing"
                       render={({ field }) => (
-                        <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                        <FormItem className="flex flex-row items-start gap-3 space-y-0">
                           <FormControl>
                             <Checkbox
                               checked={field.value}
@@ -540,7 +583,10 @@ export default function QuotePage() {
                             />
                           </FormControl>
                           <div className="space-y-1 leading-none">
-                            <FormLabel>
+                            <FormLabel 
+                              className="cursor-pointer select-none"
+                              onClick={() => field.onChange(!field.value)}
+                            >
                               אני מעוניין לקבל עדכונים ומבצעים בדוא״ל
                             </FormLabel>
                           </div>
@@ -548,6 +594,27 @@ export default function QuotePage() {
                       )}
                     />
                   </div>
+
+                  {/* reCAPTCHA */}
+                  {process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ? (
+                    <div className="flex justify-center">
+                      <Recaptcha
+                        ref={recaptchaRef}
+                        siteKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+                        size="normal"
+                        theme="light"
+                        onError={() => {
+                          console.error('reCAPTCHA failed to load');
+                        }}
+                      />
+                    </div>
+                  ) : (
+                    <div className="flex justify-center">
+                      <div className="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded" role="alert">
+                        <span className="block sm:inline">⚠️ reCAPTCHA לא מוגדר. אנא הגדירו את המפתח בהגדרות הסביבה.</span>
+                      </div>
+                    </div>
+                  )}
 
                   <Button
                     type="submit"

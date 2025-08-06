@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -12,6 +12,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
+import { Recaptcha, type RecaptchaRef } from "@/components/ui/recaptcha";
 
 const contactFormSchema = z.object({
   name: z.string().min(2, "שם חייב להכיל לפחות 2 תווים"),
@@ -26,6 +27,7 @@ type ContactFormValues = z.infer<typeof contactFormSchema>;
 export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const recaptchaRef = useRef<RecaptchaRef>(null);
 
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactFormSchema),
@@ -42,6 +44,19 @@ export default function ContactPage() {
     setIsSubmitting(true);
     
     try {
+      // Get reCAPTCHA token if reCAPTCHA is configured
+      let recaptchaToken = null;
+      if (process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY) {
+        recaptchaToken = await recaptchaRef.current?.executeAsync();
+        if (!recaptchaToken) {
+          alert('אירעה שגיאה באימות האבטחה. אנא נסו שוב.');
+          setIsSubmitting(false);
+          return;
+        }
+      } else {
+        console.warn('reCAPTCHA is not configured, skipping verification');
+      }
+
       // Send email notification to admin
       const emailResponse = await fetch('/api/email/contact', {
         method: 'POST',
@@ -53,6 +68,7 @@ export default function ContactPage() {
           email: data.email,
           phone: data.phone,
           message: `${data.subject ? `נושא: ${data.subject}\n\n` : ''}${data.message}`,
+          recaptchaToken: recaptchaToken,
         }),
       });
 
@@ -66,8 +82,11 @@ export default function ContactPage() {
       console.log("Email sent:", emailResult);
       setIsSubmitted(true);
       form.reset();
+      recaptchaRef.current?.reset();
     } catch (error) {
       console.error("Error submitting contact form:", error);
+      alert("אירעה שגיאה בשליחת ההודעה. אנא נסו שוב");
+      recaptchaRef.current?.reset();
     } finally {
       setIsSubmitting(false);
     }
@@ -266,6 +285,27 @@ export default function ContactPage() {
                             </FormItem>
                           )}
                         />
+
+                        {/* reCAPTCHA */}
+                        {process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ? (
+                          <div className="flex justify-center">
+                            <Recaptcha
+                              ref={recaptchaRef}
+                              siteKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+                              size="normal"
+                              theme="light"
+                              onError={() => {
+                                console.error('reCAPTCHA failed to load');
+                              }}
+                            />
+                          </div>
+                        ) : (
+                          <div className="flex justify-center">
+                            <div className="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded" role="alert">
+                              <span className="block sm:inline">⚠️ reCAPTCHA לא מוגדר. אנא הגדירו את המפתח בהגדרות הסביבה.</span>
+                            </div>
+                          </div>
+                        )}
 
                         <Button 
                           type="submit" 
