@@ -1,11 +1,13 @@
 "use client";
 
 import { notFound, useParams } from "next/navigation";
+import Link from "next/link";
 import { services } from "@/components/sections/services";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useCart } from "@/hooks/use-cart";
 import { useState } from "react";
+import { ArrowRight, ShoppingCart } from "lucide-react";
 
 export default function ServicePage() {
   const params = useParams();
@@ -34,27 +36,101 @@ export default function ServicePage() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto py-12 px-4">
-      <Card>
-        <CardHeader className="flex flex-row items-center gap-4">
-          <Icon className="w-10 h-10 text-primary" />
-          <CardTitle className="text-2xl">{service.title}</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="mb-4 text-lg">{service.description}</p>
-          <ul className="mb-4 list-disc pr-6 text-gray-700">
-            {service.features.map((f: string) => (
-              <li key={f}>{f}</li>
-            ))}
-          </ul>
-          <div className="flex items-center gap-4">
-            <span className="font-bold text-xl text-primary">{service.price}</span>
-            <Button onClick={handleAddToCart} disabled={isAdding}>
-              {isAdding ? "מוסיף..." : "הוסף לעגלה"}
-            </Button>
+    <div className="min-h-screen bg-slate-50 py-12">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <Button asChild variant="ghost" className="mb-8">
+          <Link href="/services" className="flex items-center gap-2">
+            <ArrowRight className="w-4 h-4" />
+            חזרה לכל השירותים
+          </Link>
+        </Button>
+
+        <Card className="overflow-hidden border-none shadow-xl">
+          <div className="bg-primary/5 p-8 md:p-12 text-center">
+            <div className="mx-auto w-20 h-20 bg-white rounded-2xl shadow-sm flex items-center justify-center mb-6">
+              <Icon className="w-10 h-10 text-primary" />
+            </div>
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{service.title}</h1>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">{service.description}</p>
           </div>
-        </CardContent>
-      </Card>
+
+          <CardContent className="p-8 md:p-12 space-y-12">
+            {/* Extended Description */}
+            {service.extendedDescription && (
+              <div className="space-y-4">
+                {service.extendedDescription.map((line: string, index: number) => (
+                  <p key={index} className={`text-lg ${index === service.extendedDescription.length - 1 || index === service.extendedDescription.length - 2 ? 'font-bold text-primary text-xl' : 'text-gray-700'}`}>
+                    {line}
+                  </p>
+                ))}
+              </div>
+            )}
+
+            {/* Process / How it works */}
+            {service.process && (
+              <div className="bg-slate-50 rounded-2xl p-8 border border-slate-100">
+                <h3 className="text-2xl font-bold text-gray-900 mb-6">איך זה עובד?</h3>
+                <ul className="space-y-4">
+                  {service.process.map((step: string, index: number) => (
+                    <li key={index} className="flex items-start gap-3 text-lg text-gray-700">
+                      <span>{step}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Features (Legacy/Standard) */}
+            {!service.process && service.features && (
+              <div>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">מה כולל השירות?</h3>
+                <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {service.features.map((feature: string, index: number) => (
+                    <li key={index} className="flex items-center gap-2 text-gray-700">
+                      <span className="w-2 h-2 bg-primary rounded-full" />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Notes */}
+            {service.notes && (
+              <div className="bg-yellow-50 border-r-4 border-yellow-400 p-6 rounded-lg">
+                <h4 className="text-lg font-bold text-yellow-800 mb-3 flex items-center gap-2">
+                  ⚠️ הערות חשובות
+                </h4>
+                <ul className="space-y-2">
+                  {service.notes.map((note: string, index: number) => (
+                    <li key={index} className="text-yellow-800">
+                      {note}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* CTA Section */}
+            <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-8 border-t">
+              <div>
+                <p className="text-sm text-gray-500 mb-1">מחיר השירות</p>
+                <p className="text-3xl font-bold text-primary">{service.price}</p>
+              </div>
+              <Button size="lg" className="w-full md:w-auto text-lg px-8 py-6" onClick={handleAddToCart} disabled={isAdding}>
+                {isAdding ? (
+                  "מוסיף..."
+                ) : (
+                  <>
+                    <ShoppingCart className="ml-2 h-5 w-5" />
+                    הוסף לעגלה
+                  </>
+                )}
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }
