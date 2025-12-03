@@ -3,50 +3,50 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Home, PaintBucket, Ruler, Lightbulb, ShoppingCart } from "lucide-react";
+import { Home, PaintBucket, Ruler, MessageSquare, ShoppingCart } from "lucide-react";
 import { useCart } from "@/hooks/use-cart";
 import { useState } from "react";
 
 export const services = [
   {
-    id: "architectural-design",
-    icon: Home,
-    title: "עיצוב אדריכלי",
-    description: "תכנון מבנים חדשים ושיפוץ מבנים קיימים עם דגש על פונקציונליות ויופי",
-    price: "החל מ-₪15,000",
-    numericPrice: 15000,
-    category: "אדריכלות",
-    features: ["תוכניות אדריכליות מפורטות", "ליווי בתהליך הרישוי", "פיקוח על הביצוע"]
-  },
-  {
     id: "interior-design",
     icon: PaintBucket,
-    title: "עיצוב פנים",
-    description: "יצירת חללים פנימיים מעוצבים ומותאמים לאורח החיים שלכם",
-    price: "החל מ-₪8,000",
-    numericPrice: 8000,
+    title: "תכנון ועיצוב פנים",
+    description: "תכנון ועיצוב פנים מותאם אישית לצרכים שלכם, יצירת חללים הרמוניים ופונקציונליים.",
+    price: "החל מ-₪2,500",
+    numericPrice: 2500,
     category: "עיצוב פנים",
-    features: ["תכנון פריסת רהיטים", "בחירת צבעים וחומרים", "עיצוב תאורה"]
+    features: ["תכנון העמדה", "בחירת חומרים וגוונים", "הדמיות תלת מימד"]
   },
   {
-    id: "space-planning",
+    id: "drafting",
     icon: Ruler,
-    title: "תכנון חללים",
-    description: "אופטימיזציה של השימוש בחלל לקבלת מקסימום פונקציונליות",
-    price: "החל מ-₪5,000",
-    numericPrice: 5000,
-    category: "תכנון",
-    features: ["ניתוח חלל קיים", "הצעות לשיפור", "תוכניות מפורטות"]
+    title: "שירותי שרטוט",
+    description: "שירותי שרטוט מקצועיים לכל מטרה, המרת סקיצות לתוכניות עבודה מדויקות.",
+    price: "החל מ-₪500",
+    numericPrice: 500,
+    category: "שרטוט",
+    features: ["שרטוט תוכניות קיימות", "הכנת תוכניות מכר", "שרטוט לביצוע"]
   },
   {
-    id: "lighting-design",
-    icon: Lightbulb,
-    title: "עיצוב תאורה",
-    description: "תכנון מערכות תאורה שיוצרות אווירה מושלמת בכל חלל",
-    price: "החל מ-₪3,000",
-    numericPrice: 3000,
-    category: "תאורה",
-    features: ["תכנון נקודות תאורה", "בחירת גופי תאורה", "חיסכון באנרגיה"]
+    id: "consultation",
+    icon: MessageSquare,
+    title: "פגישות יעוץ / חוות דעת",
+    description: "ייעוץ מקצועי וחוות דעת אדריכלית לפני רכישה, שיפוץ או בניה.",
+    price: "החל מ-₪450",
+    numericPrice: 450,
+    category: "ייעוץ",
+    features: ["בדיקת נכס לפני קניה", "ייעוץ תכנוני", "פתרון בעיות רישוי"]
+  },
+  {
+    id: "full-planning",
+    icon: Home,
+    title: "תכנון וליווי מלא",
+    description: "מעטפת תכנון וליווי מלאה משלב הרעיון ועד קבלת המפתח.",
+    price: "החל מ-₪15,000",
+    numericPrice: 15000,
+    category: "תכנון",
+    features: ["תכנון אדריכלי מלא", "הגשה להיתרים", "פיקוח עליון"]
   }
 ];
 
