@@ -55,8 +55,42 @@ export default function ServicePage() {
           </div>
 
           <CardContent className="p-8 md:p-12 space-y-12">
-            {/* Extended Description */}
-            {service.extendedDescription && (
+            {/* Sections (for services with multiple sub-services like consultation) */}
+            {service.sections && service.sections.map((section: any, sectionIndex: number) => (
+              <div key={sectionIndex} className="space-y-8">
+                <div className="border-b-2 border-primary/20 pb-4">
+                  <h2 className="text-3xl font-bold text-primary">{section.title}</h2>
+                </div>
+                
+                {/* Section Extended Description */}
+                {section.extendedDescription && (
+                  <div className="space-y-4">
+                    {section.extendedDescription.map((line: string, index: number) => (
+                      <p key={index} className={`text-lg ${index === section.extendedDescription.length - 1 || index === section.extendedDescription.length - 2 ? 'font-bold text-primary text-xl' : 'text-gray-700'}`}>
+                        {line}
+                      </p>
+                    ))}
+                  </div>
+                )}
+
+                {/* Section Process */}
+                {section.process && (
+                  <div className="bg-slate-50 rounded-2xl p-8 border border-slate-100">
+                    <h3 className="text-2xl font-bold text-gray-900 mb-6">איך זה עובד?</h3>
+                    <ul className="space-y-4">
+                      {section.process.map((step: string, index: number) => (
+                        <li key={index} className="flex items-start gap-3 text-lg text-gray-700">
+                          <span>{step}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            ))}
+
+            {/* Extended Description (for single-section services) */}
+            {!service.sections && service.extendedDescription && (
               <div className="space-y-4">
                 {service.extendedDescription.map((line: string, index: number) => (
                   <p key={index} className={`text-lg ${index === service.extendedDescription.length - 1 || index === service.extendedDescription.length - 2 ? 'font-bold text-primary text-xl' : 'text-gray-700'}`}>
@@ -66,8 +100,8 @@ export default function ServicePage() {
               </div>
             )}
 
-            {/* Process / How it works */}
-            {service.process && (
+            {/* Process / How it works (for single-section services) */}
+            {!service.sections && service.process && (
               <div className="bg-slate-50 rounded-2xl p-8 border border-slate-100">
                 <h3 className="text-2xl font-bold text-gray-900 mb-6">איך זה עובד?</h3>
                 <ul className="space-y-4">
@@ -87,6 +121,20 @@ export default function ServicePage() {
                 <ul className="space-y-3">
                   {service.suitableFor.map((item: string, index: number) => (
                     <li key={index} className="text-lg text-gray-700">
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Included Services */}
+            {service.includedServices && (
+              <div className="bg-green-50 rounded-2xl p-8 border border-green-100">
+                <h3 className="text-2xl font-bold text-gray-900 mb-6">השירות כולל:</h3>
+                <ul className="space-y-3">
+                  {service.includedServices.map((item: string, index: number) => (
+                    <li key={index} className={`text-lg ${index === service.includedServices.length - 1 ? 'font-bold text-green-800 mt-4' : 'text-gray-700'}`}>
                       {item}
                     </li>
                   ))}
