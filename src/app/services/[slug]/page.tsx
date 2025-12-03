@@ -80,6 +80,20 @@ export default function ServicePage() {
               </div>
             )}
 
+            {/* Suitable For */}
+            {service.suitableFor && (
+              <div className="bg-blue-50 rounded-2xl p-8 border border-blue-100">
+                <h3 className="text-2xl font-bold text-gray-900 mb-6">מתאים ל:</h3>
+                <ul className="space-y-3">
+                  {service.suitableFor.map((item: string, index: number) => (
+                    <li key={index} className="text-lg text-gray-700">
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
             {/* Features (Legacy/Standard) */}
             {!service.process && service.features && (
               <div>
