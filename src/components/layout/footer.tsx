@@ -91,26 +91,15 @@ export function Footer() {
           </div>
 
           {/* Contact Info */}
-          <div className="space-y-4">
+          <div className="space-y-4 text-right">
             <h4 className="text-xl font-semibold">פרטי התקשרות</h4>
-            <div className="space-y-3 text-sm text-gray-300">
-              <div className="flex items-center gap-3">
-                <Phone className="h-4 w-4 text-primary flex-shrink-0" />
-                <a href="tel:0501234567" className="hover:text-white transition-colors">
-                  050-123-4567
-                </a>
-              </div>
-              <div className="flex items-center gap-3">
-                <Mail className="h-4 w-4 text-primary flex-shrink-0" />
-                <a href="mailto:rotem@example.com" className="hover:text-white transition-colors">
+            <ul className="space-y-2 text-sm text-gray-300">
+              <li>
+                <a href="mailto:rotem@example.com" className="hover:text-white transition-colors text-right">
                   rotem@example.com
                 </a>
-              </div>
-              <div className="flex items-center gap-3">
-                <MapPin className="h-4 w-4 text-primary flex-shrink-0" />
-                <span>תל אביב, ישראל</span>
-              </div>
-            </div>
+              </li>
+            </ul>
           </div>
         </div>
 
