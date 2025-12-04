@@ -49,7 +49,7 @@ export default function ServicesPage() {
               <Button asChild variant="secondary" size="lg">
                 <Link href="/contact">צרו קשר</Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-primary">
+              <Button asChild variant="secondary" size="lg">
                 <Link href="/quote">בקשת הצעת מחיר</Link>
               </Button>
             </div>
