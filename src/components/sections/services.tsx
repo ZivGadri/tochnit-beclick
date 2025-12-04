@@ -174,7 +174,7 @@ export function Services() {
   };
 
   return (
-    <section className="py-20 bg-background">
+    <section className="py-20 bg-background/90">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">

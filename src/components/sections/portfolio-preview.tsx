@@ -29,7 +29,7 @@ const featuredProjects = [
 
 export function PortfolioPreview() {
   return (
-    <section className="py-20 bg-gray-50">
+    <section className="py-20 bg-background/90">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">

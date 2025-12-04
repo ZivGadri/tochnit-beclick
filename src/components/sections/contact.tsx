@@ -32,14 +32,14 @@ const contactInfo = [
 
 export function Contact() {
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20 bg-background/90">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
             בואו נתחיל לתכנן יחד
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             מוזמנים ליצור קשר לקבלת ייעוץ חינם ולשמוע איך אנחנו יכולים להפוך את החלום שלכם למציאות
           </p>
         </div>

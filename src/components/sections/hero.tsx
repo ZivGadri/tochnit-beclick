@@ -4,7 +4,7 @@ import { ArrowLeft, CheckCircle, PenTool, FileText, Lightbulb } from "lucide-rea
 
 export function Hero() {
   return (
-    <section className="relative bg-gradient-to-br from-slate-50 to-blue-50 py-20 lg:py-32 w-full">
+    <section className="relative bg-background/90 py-20 lg:py-32 w-full">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start w-full">
           {/* Full-width heading */}

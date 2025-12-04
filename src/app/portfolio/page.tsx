@@ -118,7 +118,7 @@ export default function PortfolioPage() {
       <Header />
       <main className="w-full">
         {/* Hero Section */}
-        <section className="bg-gradient-to-br from-slate-50 to-blue-50 py-16 w-full">
+        <section className="bg-background/90 py-16 w-full">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
             <div className="text-center">
               <h1 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-6">

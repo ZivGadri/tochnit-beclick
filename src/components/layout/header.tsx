@@ -19,7 +19,7 @@ export function Header() {
   ];
 
   return (
-    <header className="bg-background/90 shadow-sm border-b sticky top-0 z-50 w-full backdrop-blur supports-[backdrop-filter]:bg-background/80">
+    <header className="bg-background/90 shadow-sm border-b sticky top-0 z-50 w-full backdrop-blur supports-[backdrop-filter]:bg-background/90">
       <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
         <div className="flex justify-between items-center h-16 w-full">
           {/* Logo */}
