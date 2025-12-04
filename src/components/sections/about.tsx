@@ -35,7 +35,7 @@ export function About() {
               אודות רותם
             </h2>
             <div className="space-y-6 text-gray-600 leading-relaxed">
-              <p className="text-lg">
+              <p className="text-xl">
                 אני רותם, אדריכלית ומעצבת פנים עם תשוקה ליצירת חללים שמשקפים את האישיות 
                 והצרכים הייחודיים של כל לקוח.
               </p>

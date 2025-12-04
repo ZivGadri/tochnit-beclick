@@ -105,7 +105,7 @@ export default function ContactPage() {
               <h2 className="text-2xl font-bold text-gray-900 mb-4">
                 תודה על פנייתכם!
               </h2>
-              <p className="text-lg text-gray-600 mb-6">
+              <p className="text-xl text-gray-600 mb-6">
                 קיבלנו את הודעתכם ונחזור אליכם בהקדם האפשרי, בדרך כלל תוך 24 שעות.
               </p>
               <Button onClick={() => setIsSubmitted(false)} variant="outline">
@@ -345,7 +345,7 @@ export default function ContactPage() {
             <div className="bg-gray-200 rounded-lg aspect-[16/9] flex items-center justify-center">
               <div className="text-center text-gray-500">
                 <MapPin className="w-12 h-12 mx-auto mb-4" />
-                <p className="text-lg">מפה אינטראקטיבית תתווסף כאן</p>
+                <p className="text-xl">מפה אינטראקטיבית תתווסף כאן</p>
                 <p className="text-sm">רחוב הרצל 25, תל אביב-יפו</p>
               </div>
             </div>

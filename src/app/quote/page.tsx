@@ -194,7 +194,7 @@ export default function QuotePage() {
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               בקשת הצעת מחיר
             </h1>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               מלאו את הטופס הבא ונחזור אליכם עם הצעת מחיר מותאמת אישית לפרויקט שלכם
             </p>
           </div>

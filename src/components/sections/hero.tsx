@@ -6,22 +6,29 @@ export function Hero() {
   return (
     <section className="relative bg-gradient-to-br from-slate-50 to-blue-50 py-20 lg:py-32 w-full">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
-          {/* Content */}
-          <div className="text-center lg:text-right">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight mb-4">
-              תוכנית בקליק – <span className="text-primary">הדרך הפשוטה והמקצועית</span> לתכנון ועיצוב
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start w-full">
+          {/* Full-width heading */}
+          <div className="lg:col-span-2 text-right">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight space-y-2">
+              <span className="block w-full">תוכנית בקליק</span>
+              <span className="block w-full">
+                <span className="text-primary">– הדרך הפשוטה והמקצועית</span> לתכנון ועיצוב
+              </span>
             </h1>
+          </div>
+
+          {/* Content */}
+          <div className="text-right self-start">
             <h2 className="text-xl md:text-2xl font-medium text-gray-700 mb-6">
               אתם יודעים בדיוק מה אתם רוצים? אנחנו יודעים להפוך את זה לתוכנית מקצועית.
             </h2>
-            <p className="text-lg text-gray-600 leading-relaxed mb-8">
+            <p className="text-xl text-gray-600 leading-relaxed mb-8">
               בין אם אתם אדריכלים, מעצבים, קבלנים קטנים או לקוחות פרטיים – אצלנו תוכלו להזמין תכנון, תוכניות ביצוע, שרטוטים, עיצובים, פגישות יעוץ או חוות דעת מקצועית בצורה ישירה, מקצועית וברורה.
             </p>
 
             {/* How it works */}
             <div className="bg-white/50 p-6 rounded-2xl backdrop-blur-sm border border-white/20 mb-8 text-right">
-              <h3 className="text-lg font-bold text-gray-900 mb-4">איך זה עובד?</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-4">איך זה עובד?</h3>
               <ul className="space-y-3">
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-6 h-6 text-green-500 flex-shrink-0 mt-0.5" />
@@ -50,20 +57,20 @@ export function Hero() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Button asChild size="lg" className="text-lg">
+              <Button asChild size="lg" className="text-xl">
                 <Link href="/services">
                   לכל השירותים
                   <ArrowLeft className="ms-2 h-5 w-5" />
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="text-lg">
+              <Button asChild variant="outline" size="lg" className="text-xl">
                 <Link href="/contact">צרו קשר</Link>
               </Button>
             </div>
           </div>
 
           {/* Image */}
-          <div className="relative hidden lg:block">
+          <div className="relative hidden lg:block self-start">
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-2xl">
               <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-purple-600/20 z-10" />
               <div className="w-full h-full bg-gradient-to-br from-slate-200 to-slate-300 flex items-center justify-center">

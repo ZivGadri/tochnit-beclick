@@ -38,7 +38,7 @@ export function Footer() {
 
           {/* Services */}
           <div className="space-y-4">
-            <h4 className="text-lg font-semibold">שירותים</h4>
+            <h4 className="text-xl font-semibold">שירותים</h4>
             <ul className="space-y-2 text-sm text-gray-300">
               <li>
                 <Link href="/services/architectural-design" className="hover:text-white transition-colors">
@@ -65,7 +65,7 @@ export function Footer() {
 
           {/* Links */}
           <div className="space-y-4">
-            <h4 className="text-lg font-semibold">קישורים</h4>
+            <h4 className="text-xl font-semibold">קישורים</h4>
             <ul className="space-y-2 text-sm text-gray-300">
               <li>
                 <Link href="/about" className="hover:text-white transition-colors">
@@ -92,7 +92,7 @@ export function Footer() {
 
           {/* Contact Info */}
           <div className="space-y-4">
-            <h4 className="text-lg font-semibold">פרטי התקשרות</h4>
+            <h4 className="text-xl font-semibold">פרטי התקשרות</h4>
             <div className="space-y-3 text-sm text-gray-300">
               <div className="flex items-center gap-3">
                 <Phone className="h-4 w-4 text-primary flex-shrink-0" />

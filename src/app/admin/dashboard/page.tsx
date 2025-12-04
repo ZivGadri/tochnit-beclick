@@ -72,7 +72,7 @@ export default function AdminDashboard() {
   if (status === "loading" || loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="text-lg">טוען...</div>
+        <div className="text-xl">טוען...</div>
       </div>
     );
   }
@@ -198,7 +198,7 @@ export default function AdminDashboard() {
                 onClick={() => router.push("/admin/quotes")}>
             <CardHeader className="text-center">
               <FileText className="h-8 w-8 mx-auto mb-2 text-blue-600" />
-              <CardTitle className="text-lg">ניהול הצעות מחיר</CardTitle>
+              <CardTitle className="text-xl">ניהול הצעות מחיר</CardTitle>
               <CardDescription>צפה וטפל בבקשות הצעת מחיר</CardDescription>
             </CardHeader>
           </Card>
@@ -207,7 +207,7 @@ export default function AdminDashboard() {
                 onClick={() => router.push("/admin/orders")}>
             <CardHeader className="text-center">
               <ShoppingCart className="h-8 w-8 mx-auto mb-2 text-green-600" />
-              <CardTitle className="text-lg">ניהול הזמנות</CardTitle>
+              <CardTitle className="text-xl">ניהול הזמנות</CardTitle>
               <CardDescription>צפה וטפל בהזמנות לקוחות</CardDescription>
             </CardHeader>
           </Card>
@@ -216,7 +216,7 @@ export default function AdminDashboard() {
                 onClick={() => router.push("/admin/portfolio")}>
             <CardHeader className="text-center">
               <Image className="h-8 w-8 mx-auto mb-2 text-purple-600" />
-              <CardTitle className="text-lg">ניהול פורטפוליו</CardTitle>
+              <CardTitle className="text-xl">ניהול פורטפוליו</CardTitle>
               <CardDescription>הוספה ועריכת פרויקטים</CardDescription>
             </CardHeader>
           </Card>
@@ -225,7 +225,7 @@ export default function AdminDashboard() {
                 onClick={() => router.push("/admin/contacts")}>
             <CardHeader className="text-center">
               <MessageSquare className="h-8 w-8 mx-auto mb-2 text-orange-600" />
-              <CardTitle className="text-lg">יצירות קשר</CardTitle>
+              <CardTitle className="text-xl">יצירות קשר</CardTitle>
               <CardDescription>צפה בהודעות לקוחות</CardDescription>
             </CardHeader>
           </Card>

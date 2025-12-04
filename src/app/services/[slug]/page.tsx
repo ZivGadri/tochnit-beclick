@@ -66,7 +66,7 @@ export default function ServicePage() {
                 {section.extendedDescription && (
                   <div className="space-y-4">
                     {section.extendedDescription.map((line: string, index: number) => (
-                      <p key={index} className={`text-lg ${index === section.extendedDescription.length - 1 || index === section.extendedDescription.length - 2 ? 'font-bold text-primary text-xl' : 'text-gray-700'}`}>
+                      <p key={index} className={`text-xl ${index === section.extendedDescription.length - 1 || index === section.extendedDescription.length - 2 ? 'font-bold text-primary text-xl' : 'text-gray-700'}`}>
                         {line}
                       </p>
                     ))}
@@ -79,7 +79,7 @@ export default function ServicePage() {
                     <h3 className="text-2xl font-bold text-gray-900 mb-6">איך זה עובד?</h3>
                     <ul className="space-y-4">
                       {section.process.map((step: string, index: number) => (
-                        <li key={index} className="flex items-start gap-3 text-lg text-gray-700">
+                        <li key={index} className="flex items-start gap-3 text-xl text-gray-700">
                           <span>{step}</span>
                         </li>
                       ))}
@@ -93,7 +93,7 @@ export default function ServicePage() {
             {!service.sections && service.extendedDescription && (
               <div className="space-y-4">
                 {service.extendedDescription.map((line: string, index: number) => (
-                  <p key={index} className={`text-lg ${index === service.extendedDescription.length - 1 || index === service.extendedDescription.length - 2 ? 'font-bold text-primary text-xl' : 'text-gray-700'}`}>
+                  <p key={index} className={`text-xl ${index === service.extendedDescription.length - 1 || index === service.extendedDescription.length - 2 ? 'font-bold text-primary text-xl' : 'text-gray-700'}`}>
                     {line}
                   </p>
                 ))}
@@ -106,7 +106,7 @@ export default function ServicePage() {
                 <h3 className="text-2xl font-bold text-gray-900 mb-6">איך זה עובד?</h3>
                 <ul className="space-y-4">
                   {service.process.map((step: string, index: number) => (
-                    <li key={index} className="flex items-start gap-3 text-lg text-gray-700">
+                    <li key={index} className="flex items-start gap-3 text-xl text-gray-700">
                       <span>{step}</span>
                     </li>
                   ))}
@@ -120,7 +120,7 @@ export default function ServicePage() {
                 <h3 className="text-2xl font-bold text-gray-900 mb-6">מתאים ל:</h3>
                 <ul className="space-y-3">
                   {service.suitableFor.map((item: string, index: number) => (
-                    <li key={index} className="text-lg text-gray-700">
+                    <li key={index} className="text-xl text-gray-700">
                       {item}
                     </li>
                   ))}
@@ -134,7 +134,7 @@ export default function ServicePage() {
                 <h3 className="text-2xl font-bold text-gray-900 mb-6">השירות כולל:</h3>
                 <ul className="space-y-3">
                   {service.includedServices.map((item: string, index: number) => (
-                    <li key={index} className={`text-lg ${index === service.includedServices.length - 1 ? 'font-bold text-green-800 mt-4' : 'text-gray-700'}`}>
+                    <li key={index} className={`text-xl ${index === service.includedServices.length - 1 ? 'font-bold text-green-800 mt-4' : 'text-gray-700'}`}>
                       {item}
                     </li>
                   ))}
@@ -160,7 +160,7 @@ export default function ServicePage() {
             {/* Notes */}
             {service.notes && (
               <div className="bg-yellow-50 border-r-4 border-yellow-400 p-6 rounded-lg">
-                <h4 className="text-lg font-bold text-yellow-800 mb-3 flex items-center gap-2">
+                <h4 className="text-xl font-bold text-yellow-800 mb-3 flex items-center gap-2">
                   ⚠️ הערות חשובות
                 </h4>
                 <ul className="space-y-2">
@@ -179,7 +179,7 @@ export default function ServicePage() {
                 <p className="text-sm text-gray-500 mb-1">מחיר השירות</p>
                 <p className="text-3xl font-bold text-primary">{service.price}</p>
               </div>
-              <Button size="lg" className="w-full md:w-auto text-lg px-8 py-6" onClick={handleAddToCart} disabled={isAdding}>
+              <Button size="lg" className="w-full md:w-auto text-xl px-8 py-6" onClick={handleAddToCart} disabled={isAdding}>
                 {isAdding ? (
                   "מוסיף..."
                 ) : (

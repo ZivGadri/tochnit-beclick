@@ -32,7 +32,7 @@ export default function AboutPage() {
                 <h2 className="text-3xl font-bold text-gray-900 mb-6">
                   מי אנחנו?
                 </h2>
-                <div className="space-y-4 text-lg text-gray-600 leading-7">
+                <div className="space-y-4 text-xl text-gray-600 leading-7">
                   <p>
                     <strong className="text-gray-900">רותם ליאור</strong>, הנדסאית אדריכלות, החלה את דרכה בשנת 2010 בתחום שינויי הדיירים.
                   </p>
@@ -59,7 +59,7 @@ export default function AboutPage() {
                     <div className="w-32 h-32 mx-auto mb-6 bg-white rounded-full shadow-lg flex items-center justify-center">
                       <Building className="w-16 h-16 text-primary" />
                     </div>
-                    <p className="text-gray-700 text-lg font-medium">רותם ליאור</p>
+                    <p className="text-gray-700 text-xl font-medium">רותם ליאור</p>
                     <p className="text-gray-600">הנדסאית אדריכלות</p>
                   </div>
                 </div>
@@ -74,7 +74,7 @@ export default function AboutPage() {
             <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
               מה אנחנו?
             </h2>
-            <div className="max-w-4xl mx-auto space-y-4 text-lg text-gray-600 leading-7">
+            <div className="max-w-4xl mx-auto space-y-4 text-xl text-gray-600 leading-7">
               <p>
                 בעולם שהולך והופך דיגיטלי, גם עולם הבנייה משתנה.
               </p>

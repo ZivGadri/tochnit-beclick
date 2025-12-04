@@ -70,7 +70,7 @@ export default function CartPage() {
             <h1 className="text-3xl font-bold text-gray-900 mb-4">
               העגלה שלכם ריקה
             </h1>
-            <p className="text-lg text-gray-600 mb-8">
+            <p className="text-xl text-gray-600 mb-8">
               הוסיפו שירותים לעגלה כדי להמשיך
             </p>
             <Button asChild size="lg">
@@ -112,13 +112,13 @@ export default function CartPage() {
                       </div>
                       
                       <div className="flex-1">
-                        <h3 className="text-lg font-semibold text-gray-900">
+                        <h3 className="text-xl font-semibold text-gray-900">
                           {item.service.name}
                         </h3>
                         <p className="text-sm text-gray-600 mt-1">
                           {item.service.description}
                         </p>
-                        <p className="text-lg font-bold text-primary mt-2">
+                        <p className="text-xl font-bold text-primary mt-2">
                           ₪{item.service.price.toLocaleString()}
                         </p>
                       </div>
@@ -195,7 +195,7 @@ export default function CartPage() {
                   
                   <hr />
                   
-                  <div className="flex justify-between text-lg font-bold">
+                  <div className="flex justify-between text-xl font-bold">
                     <span>סך הכל לתשלום</span>
                     <span>₪{total.toLocaleString()}</span>
                   </div>

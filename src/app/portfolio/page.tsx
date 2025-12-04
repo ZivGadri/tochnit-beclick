@@ -124,7 +124,7 @@ export default function PortfolioPage() {
               <h1 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-6">
                 תיק העבודות שלנו
               </h1>
-              <p className="text-lg text-gray-600 leading-relaxed max-w-3xl mx-auto">
+              <p className="text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto">
                 גלו את הפרויקטים שעיצבנו ובנינו עבור הלקוחות שלנו. 
                 כל פרויקט הוא סיפור ייחודי של יצירתיות, פונקציונליות ויופי.
               </p>
@@ -291,7 +291,7 @@ export default function PortfolioPage() {
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
               רוצים שהפרויקט הבא יהיה שלכם?
             </h2>
-            <p className="text-lg opacity-90 mb-8 max-w-2xl mx-auto">
+            <p className="text-xl opacity-90 mb-8 max-w-2xl mx-auto">
               בואו ניצור יחד משהו מיוחד. צרו קשר לייעוץ חינם והצעת מחיר מותאמת אישית
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

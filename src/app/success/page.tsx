@@ -43,7 +43,7 @@ function SuccessContent() {
         <main className="w-full py-16">
           <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8 text-center">
             <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full mx-auto mb-4"></div>
-            <p className="text-lg text-gray-600">מאמת את התשלום...</p>
+            <p className="text-xl text-gray-600">מאמת את התשלום...</p>
           </div>
         </main>
         <Footer />
@@ -60,7 +60,7 @@ function SuccessContent() {
             <h1 className="text-3xl font-bold text-gray-900 mb-4">
               לא נמצאו פרטי הזמנה
             </h1>
-            <p className="text-lg text-gray-600 mb-8">
+            <p className="text-xl text-gray-600 mb-8">
               אירעה שגיאה באיתור פרטי ההזמנה שלכם
             </p>
             <Button asChild>
@@ -83,7 +83,7 @@ function SuccessContent() {
             <h1 className="text-3xl font-bold text-gray-900 mb-2">
               התשלום בוצע בהצלחה!
             </h1>
-            <p className="text-lg text-gray-600">
+            <p className="text-xl text-gray-600">
               תודה שבחרתם בשירותי האדריכלות שלנו
             </p>
           </div>
@@ -175,7 +175,7 @@ export default function SuccessPage() {
         <main className="w-full py-16">
           <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8 text-center">
             <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full mx-auto mb-4"></div>
-            <p className="text-lg text-gray-600">טוען...</p>
+            <p className="text-xl text-gray-600">טוען...</p>
           </div>
         </main>
         <Footer />
