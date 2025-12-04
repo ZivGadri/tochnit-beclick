@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Home, PaintBucket, Ruler, MessageSquare, ShoppingCart } from "lucide-react";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Home, PaintBucket, Ruler, MessageSquare, ShoppingCart, Send } from "lucide-react";
 import { useCart } from "@/hooks/use-cart";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export const services = [
   {
@@ -124,6 +125,7 @@ export const services = [
     price: "החל מ-₪15,000",
     numericPrice: 15000,
     category: "תכנון",
+    requiresCustomQuote: true,
     features: ["תכנון אדריכלי מלא", "הגשה להיתרים", "פיקוח עליון"],
     extendedDescription: [
       "רוצים ליווי מקצועי צמוד לאורך כל הדרך?",
@@ -148,6 +150,7 @@ export const services = [
 export function Services() {
   const { addItem } = useCart();
   const [addingStates, setAddingStates] = useState<{ [key: string]: boolean }>({});
+  const router = useRouter();
 
   const handleAddToCart = (service: typeof services[0]) => {
     setAddingStates(prev => ({ ...prev, [service.id]: true }));
@@ -164,6 +167,10 @@ export function Services() {
     setTimeout(() => {
       setAddingStates(prev => ({ ...prev, [service.id]: false }));
     }, 500);
+  };
+
+  const handleRequestQuote = (service: typeof services[0]) => {
+    router.push(`/quote?service=${service.id}`);
   };
 
   return (
@@ -185,7 +192,7 @@ export function Services() {
             const Icon = service.icon;
             const isAdding = addingStates[service.id] || false;
             return (
-              <Card key={service.id} className="hover:shadow-lg transition-shadow duration-300">
+              <Card key={service.id} className="hover:shadow-lg transition-shadow duration-300 flex flex-col">
                 <CardHeader className="text-center pb-4">
                   <div className="mx-auto w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
                     <Icon className="h-6 w-6 text-primary" />
@@ -195,7 +202,7 @@ export function Services() {
                     {service.description}
                   </CardDescription>
                 </CardHeader>
-                <CardContent className="text-center">
+                <CardContent className="text-center flex-1">
                   <div className="mb-4">
                     <span className="text-2xl font-bold text-primary">{service.price}</span>
                   </div>
@@ -207,12 +214,22 @@ export function Services() {
                       </li>
                     ))}
                   </ul>
-                  <div className="space-y-2">
-                    <Button asChild className="w-full" variant="outline">
-                      <Link href={`/services/${service.id}`}>
-                        פרטים נוספים
-                      </Link>
+                </CardContent>
+                <CardFooter className="flex flex-col space-y-2 pt-0 mt-auto">
+                  <Button asChild className="w-full" variant="outline">
+                    <Link href={`/services/${service.id}`}>
+                      פרטים נוספים
+                    </Link>
+                  </Button>
+                  {service.requiresCustomQuote ? (
+                    <Button 
+                      onClick={() => handleRequestQuote(service)}
+                      className="w-full"
+                    >
+                      <Send className="ms-2 h-4 w-4" />
+                      קבל הצעת מחיר
                     </Button>
+                  ) : (
                     <Button 
                       onClick={() => handleAddToCart(service)}
                       disabled={isAdding}
@@ -227,8 +244,8 @@ export function Services() {
                         </>
                       )}
                     </Button>
-                  </div>
-                </CardContent>
+                  )}
+                </CardFooter>
               </Card>
             );
           })}
