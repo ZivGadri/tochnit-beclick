@@ -24,50 +24,6 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Who We Are Section */}
-        <section className="py-16">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <h2 className="text-3xl font-bold text-gray-900 mb-6">
-                  מי אנחנו?
-                </h2>
-                <div className="space-y-4 text-xl text-gray-600 leading-7">
-                  <p>
-                    <strong className="text-gray-900">רותם ליאור</strong>, הנדסאית אדריכלות, החלה את דרכה בשנת 2010 בתחום שינויי הדיירים.
-                  </p>
-                  <p>
-                    במהלך השנים ניהלה מחלקות אדריכלות בחברות מובילות, וליוותה אלפי לקוחות פרטיים ואנשי מקצוע.
-                  </p>
-                  <p>
-                    בשנת 2020 הקימה משרד עצמאי המתמחה בתכנון דירות, בתים פרטיים, משרדים ופרויקטים רחבי היקף בתחום הבנייה הרוויה.
-                  </p>
-                  <p>
-                    רותם זיהתה צורך ברור: לקוחות ואנשי מקצוע רבים מחפשים פתרון מהיר, נוח וחסכוני להפקת תוכניות – בלי לשכור מעצב/ת לכל הדרך, ובלי לוותר על איכות התכנון.
-                  </p>
-                  <p className="font-bold text-primary text-xl">
-                    כך נולדה תוכנית בקליק – שירות חכם המאפשר קבלת פתרונות תכנוניים מקצועיים, שרטוטים, חוות דעת וליווי – הכול אונליין, בקלות ובמחירים נגישים.
-                  </p>
-                  <p>
-                    לצידה של רותם עובד לאורך תקופה ארוכה צוות מקצועי מהשורה הראשונה, עם ניסיון עשיר בתחומי הבנייה והתכנון, וביחד אנו כאן כדי להעניק שירות אדיב, נגיש ומקצועי לכל לקוח ואנשי מקצוע שפונים אלינו.
-                  </p>
-                </div>
-              </div>
-              <div className="text-center">
-                <div className="bg-gradient-to-br from-primary/10 to-blue-100 rounded-2xl aspect-[4/3] flex items-center justify-center p-8">
-                  <div className="text-center">
-                    <div className="w-32 h-32 mx-auto mb-6 bg-white rounded-full shadow-lg flex items-center justify-center">
-                      <Building className="w-16 h-16 text-primary" />
-                    </div>
-                    <p className="text-gray-700 text-xl font-medium">רותם ליאור</p>
-                    <p className="text-gray-600">הנדסאית אדריכלות</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* What We Are Section */}
         <section className="py-16 bg-gray-50">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -236,6 +192,50 @@ export default function AboutPage() {
           </div>
         </section>
 
+        {/* Who We Are Section */}
+        <section className="py-16">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <h2 className="text-3xl font-bold text-gray-900 mb-6">
+                  מי אנחנו?
+                </h2>
+                <div className="space-y-4 text-xl text-gray-600 leading-7">
+                  <p>
+                    <strong className="text-gray-900">רותם ליאור</strong>, הנדסאית אדריכלות, החלה את דרכה בשנת 2010 בתחום שינויי הדיירים.
+                  </p>
+                  <p>
+                    במהלך השנים ניהלה מחלקות אדריכלות בחברות מובילות, וליוותה אלפי לקוחות פרטיים ואנשי מקצוע.
+                  </p>
+                  <p>
+                    בשנת 2020 הקימה משרד עצמאי המתמחה בתכנון דירות, בתים פרטיים, משרדים ופרויקטים רחבי היקף בתחום הבנייה הרוויה.
+                  </p>
+                  <p>
+                    רותם זיהתה צורך ברור: לקוחות ואנשי מקצוע רבים מחפשים פתרון מהיר, נוח וחסכוני להפקת תוכניות – בלי לשכור מעצב/ת לכל הדרך, ובלי לוותר על איכות התכנון.
+                  </p>
+                  <p className="font-bold text-primary text-xl">
+                    כך נולדה תוכנית בקליק – שירות חכם המאפשר קבלת פתרונות תכנוניים מקצועיים, שרטוטים, חוות דעת וליווי – הכול אונליין, בקלות ובמחירים נגישים.
+                  </p>
+                  <p>
+                    לצידה של רותם עובד לאורך תקופה ארוכה צוות מקצועי מהשורה הראשונה, עם ניסיון עשיר בתחומי הבנייה והתכנון, וביחד אנו כאן כדי להעניק שירות אדיב, נגיש ומקצועי לכל לקוח ואנשי מקצוע שפונים אלינו.
+                  </p>
+                </div>
+              </div>
+              <div className="text-center">
+                <div className="bg-gradient-to-br from-primary/10 to-blue-100 rounded-2xl aspect-[4/3] flex items-center justify-center p-8">
+                  <div className="text-center">
+                    <div className="w-32 h-32 mx-auto mb-6 bg-white rounded-full shadow-lg flex items-center justify-center">
+                      <Building className="w-16 h-16 text-primary" />
+                    </div>
+                    <p className="text-gray-700 text-xl font-medium">רותם ליאור</p>
+                    <p className="text-gray-600">הנדסאית אדריכלות</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* CTA Section */}
         <section className="py-16 bg-primary text-primary-foreground">
           <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
@@ -249,7 +249,7 @@ export default function AboutPage() {
               <Button asChild size="lg" variant="secondary">
                 <Link href="/services">לכל השירותים</Link>
               </Button>
-              <Button asChild size="lg" variant="outline">
+              <Button asChild size="lg" variant="secondary">
                 <Link href="/contact">צרו קשר</Link>
               </Button>
             </div>
