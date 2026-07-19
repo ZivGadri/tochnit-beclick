@@ -134,9 +134,14 @@ model Order {
   currency        String      @default("ILS")
   
   // Stripe
-  stripeSessionId String?
+  stripeSessionId String?     @unique
   stripePaymentId String?
-  
+
+  // Customer contact (captured from Stripe at checkout; User/Quote relations are optional for guest checkout)
+  customerEmail   String?
+  customerName    String?
+  customerPhone   String?
+
   // Project details
   projectTitle    String
   projectType     String

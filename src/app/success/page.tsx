@@ -9,6 +9,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { CheckCircle, Mail, Calendar, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
+const POLL_INTERVAL_MS = 2000;
+const MAX_POLL_ATTEMPTS = 10; // ~20s, covers typical webhook delivery latency
+
 function SuccessContent() {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get("session_id");
@@ -20,20 +23,55 @@ function SuccessContent() {
   } | null>(null);
 
   useEffect(() => {
-    if (sessionId) {
-      // Here you would typically verify the session with Stripe
-      // and get order details from your database
-      setTimeout(() => {
-        setOrderDetails({
-          orderNumber: `ORD-${Date.now()}`,
-          amount: "12,500",
-          email: "customer@example.com",
-        });
-        setIsLoading(false);
-      }, 1500);
-    } else {
+    if (!sessionId) {
       setIsLoading(false);
+      return;
     }
+
+    let cancelled = false;
+
+    const poll = async (attempt: number) => {
+      try {
+        const response = await fetch(`/api/orders/by-session/${sessionId}`);
+        const data = await response.json();
+
+        if (cancelled) return;
+
+        if (response.ok && data.status && data.status !== "PENDING") {
+          setOrderDetails({
+            orderNumber: data.orderNumber ?? sessionId,
+            amount: Number(data.amount ?? 0).toLocaleString(),
+            email: data.email ?? "",
+          });
+          setIsLoading(false);
+          return;
+        }
+
+        if (attempt >= MAX_POLL_ATTEMPTS) {
+          // Webhook hasn't landed yet — show what Stripe confirmed directly, if anything
+          if (data.amount) {
+            setOrderDetails({
+              orderNumber: sessionId,
+              amount: Number(data.amount).toLocaleString(),
+              email: data.email ?? "",
+            });
+          }
+          setIsLoading(false);
+          return;
+        }
+
+        setTimeout(() => poll(attempt + 1), POLL_INTERVAL_MS);
+      } catch (error) {
+        console.error("Error fetching order details:", error);
+        if (!cancelled) setIsLoading(false);
+      }
+    };
+
+    poll(0);
+
+    return () => {
+      cancelled = true;
+    };
   }, [sessionId]);
 
   if (isLoading) {
