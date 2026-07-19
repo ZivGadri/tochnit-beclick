@@ -4,7 +4,6 @@ import {
   Head,
   Heading,
   Html,
-  Link,
   Preview,
   Section,
   Text,
@@ -112,7 +111,7 @@ export const QuoteResponseEmail = ({
         <Section style={footer}>
           <Text style={footerText}>
             <strong>רותם אדריכלות ועיצוב פנים</strong><br />
-            "הופכים חלומות למציאות אדריכלית"
+            &quot;הופכים חלומות למציאות אדריכלית&quot;
           </Text>
         </Section>
       </Container>

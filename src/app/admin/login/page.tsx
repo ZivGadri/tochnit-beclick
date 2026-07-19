@@ -40,7 +40,7 @@ export default function AdminLogin() {
           setError("אין לך הרשאות מנהל");
         }
       }
-    } catch (error) {
+    } catch {
       setError("אירעה שגיאה במהלך ההתחברות");
     } finally {
       setLoading(false);

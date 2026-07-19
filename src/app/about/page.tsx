@@ -69,7 +69,7 @@ export default function AboutPage() {
                 למי אנחנו מתאימים?
               </h2>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                "תוכנית בקליק" מתאימה בעיקר, אבל לא רק ל:
+                &quot;תוכנית בקליק&quot; מתאימה בעיקר, אבל לא רק ל:
               </p>
             </div>
             

@@ -4,7 +4,7 @@ import { notFound, useParams } from "next/navigation";
 import Link from "next/link";
 import { services } from "@/components/sections/services";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { useCart } from "@/hooks/use-cart";
 import { useState } from "react";
 import { ArrowRight, ShoppingCart } from "lucide-react";
@@ -12,12 +12,13 @@ import { ArrowRight, ShoppingCart } from "lucide-react";
 export default function ServicePage() {
   const params = useParams();
   const slug = params.slug as string;
-  const service = services.find((s: any) => s.id === slug);
-  if (!service) return notFound();
-  
-  const Icon = service.icon;
+  const service = services.find((s) => s.id === slug);
   const { addItem } = useCart();
   const [isAdding, setIsAdding] = useState(false);
+
+  if (!service) return notFound();
+
+  const Icon = service.icon;
 
   const handleAddToCart = () => {
     setIsAdding(true);
@@ -56,7 +57,7 @@ export default function ServicePage() {
 
           <CardContent className="p-8 md:p-12 space-y-12">
             {/* Sections (for services with multiple sub-services like consultation) */}
-            {service.sections && service.sections.map((section: any, sectionIndex: number) => (
+            {service.sections && service.sections.map((section, sectionIndex: number) => (
               <div key={sectionIndex} className="space-y-8">
                 <div className="border-b-2 border-primary/20 pb-4">
                   <h2 className="text-3xl font-bold text-primary">{section.title}</h2>

@@ -134,7 +134,7 @@ export default function AdminDashboard() {
             <CardContent>
               <div className="text-2xl font-bold">{stats.totalOrders}</div>
               <p className="text-xs text-muted-foreground">
-                סה"כ הזמנות
+                סה&quot;כ הזמנות
               </p>
             </CardContent>
           </Card>
@@ -147,7 +147,7 @@ export default function AdminDashboard() {
             <CardContent>
               <div className="text-2xl font-bold">₪{stats.totalRevenue.toLocaleString()}</div>
               <p className="text-xs text-muted-foreground">
-                סה"כ הכנסות
+                סה&quot;כ הכנסות
               </p>
             </CardContent>
           </Card>
