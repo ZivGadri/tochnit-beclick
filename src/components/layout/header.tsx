@@ -25,7 +25,7 @@ export function Header() {
           {/* Logo */}
           <div className="flex items-center">
             <Link href="/" className="text-2xl font-bold text-primary">
-              תוכנית בקליק
+              תוכנית בקליק - מבית 'ליאור אדריכלים'
             </Link>
           </div>
 

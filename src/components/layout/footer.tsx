@@ -95,8 +95,8 @@ export function Footer() {
             <h4 className="text-xl font-semibold">פרטי התקשרות</h4>
             <ul className="space-y-2 text-sm text-gray-300">
               <li>
-                <a href="mailto:rotem@example.com" className="hover:text-white transition-colors text-right">
-                  rotem@example.com
+                <a href="mailto:rotemlior@outlook.co.il" className="hover:text-white transition-colors text-right">
+                  rotemlior@outlook.co.il
                 </a>
               </li>
             </ul>
